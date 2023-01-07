@@ -1,0 +1,172 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+
+{% block title %}Home{% endblock %}
+
+<!-- ======= Header ======= -->
+{% block header %}
+{% include 'common/navbar.html' %}
+{% endblock %}
+<!-- End Header -->
+
+{% block content %}
+<main id="main">
+  
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+  
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>Product Details</h2>
+            <ol>
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li>Details</li>
+            </ol>
+          </div>
+  
+        </div>
+      </section><!-- End Breadcrumbs -->
+  
+      <!-- ======= Portfolio Details Section ======= -->
+      <section id="portfolio-details" class="portfolio-details">
+        <div class="container">
+  
+          <div class="row gy-4">
+  
+            <div class="col-lg-8">
+              <div class="portfolio-details-slider swiper">
+                <div class="swiper-wrapper align-items-center">
+  
+                  <div class="swiper-slide">
+                    {% if product.image %}
+                    <img src="{{product.image.url}}" alt="">
+                    {% else %}
+                    <img src="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" alt="">
+                    {% endif %}
+                  </div>
+  
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+  
+            <div class="col-lg-4">
+              <div class="portfolio-info">
+                <h3><u>Product information</u></h3>
+                <ul>
+                  <li><strong>Category</strong>: {{product.category}}</li>
+                  <li><strong>Product Type</strong>: {{product.get_post_type_display}}</li>
+                  <li><strong>Saller/Buyer</strong>: {{product.user.get_full_name}}</li>
+                  <li><strong>Price</strong>: ৳ {{product.price}} /{% if product.unit %} {{product.unit}} {% else %}Items{% endif %}</li>
+                  <li><strong>Quantity</strong>: {{product.quantity}} -{% if product.unit %}{{product.unit}} {% else %}Items{% endif %}</li>
+                  <li><strong>Project date</strong>: {{product.create_date}}</li>
+                </ul>
+              </div>
+              <div class="portfolio-description">
+                <h2><u>{{product.title}}</u></h2>
+                <p>
+                    {{product.description}}
+                </p>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+      </section>
+      <!-- End Portfolio Details Section -->
+      <!-- ======= Reply Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+  
+          <div class="section-title">
+            <h2>Reply here</h2>
+          </div>  
+          <div class="row mt-2">
+  
+  
+            <div class="col-lg-8 mt-5 mt-lg-0">
+  
+              <form action="{% url 'reply' %}" method="post" class="">
+                {% csrf_token %}
+                <div class="row">
+                <input hidden type="text" name="product_id" value="{{product.id}}">                  
+                <div class="form-group mt-3">
+                  <textarea class="form-control" name="reply" rows="5" placeholder="Message" required></textarea>
+                </div>
+                <div class="my-2">
+                  <button type="submit" class="btn btn-warning">Send Reply</button>
+                </div>
+              </form>
+  
+            </div>
+  
+          </div>
+  
+        </div>
+      </section>
+      <!-- End reply Section -->
+
+    <!-- ======= Reply list Section ======= -->
+  <section style="background-color: #eee;">
+    <div class="container py-5">
+      {% if beats %}
+      {% for beat in beats %}
+      <div class="row justify-content-center mb-3">
+        <div class="col-md-12 col-xl-10">
+          <div class="card shadow-0 border rounded-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12 col-lg-3 col-xl-3 mb-2 mb-lg-0">
+                  <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                    <img src="{{beat.user.user_info.profile_pic.url}}" height="100vh" class="w-100 rounded-circle" />
+                    <a href="#!">
+                      <div class="hover-overlay">
+                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                  <h5>{{beat.product.title}}</h5>
+                  <p class=" mb-4 mb-md-0">
+                    {{beat.reply}}
+                  </p>
+                </div>
+                <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                  
+                  <h6 class="text-warning">Name: <span class="text-info">{{beat.user.first_name}}</span></h6>
+                  <h6 class="text-warning">Phone: <span class="text-info"><a href="tel:{{beat.user.user_info.phone}}">{{beat.user.user_info.phone}}</a></span></h6>
+                  <h6 class="text-warning">Address: <span class="text-info">{{beat.user.user_info.address}}</span></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="row justify-content-center mb-3">
+        <div class="col-md-12 col-xl-10">
+          <div class="card shadow-0 border rounded-3">
+            <div class="card-body">
+              No one reply yet.
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+  <!-- End Reply list Section -->
+</main>
+<!-- End #main -->
+{% endblock %}
+
+<!-- ======= Footer ======= -->
+{% block footer %}
+{% include 'common/footer.html' %}
+{% endblock %}
+<!-- End Footer -->

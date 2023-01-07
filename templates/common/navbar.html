@@ -1,0 +1,32 @@
+  <!-- ======= Header ======= -->
+  <header id="header" class="header-inner-pages">
+    <div class="container d-flex align-items-center justify-content-lg-between">
+
+      <h1 class="logo me-auto me-lg-0"><a href="{% url 'home' %}">OAMS<span>.</span></a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto " href="{% url 'home' %}">Home</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'sale_page' %}">Shop For Sale</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'buy_page' %}">Shop For Buy</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#about">About</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Services</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#contact">Contact</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+      <!-- .navbar -->
+      
+      {% if request.user.is_authenticated %}  
+        <a href="{% url 'userprofile' %}" class="btn btn-outline-warning">Dashboard</a>
+        <a href="{% url 'logout' %}" class="btn btn-outline-warning">Logout</a>
+      {% else %} 
+        <a href="{% url 'login' %}" class="btn btn-outline-warning">Login</a>
+        <a href="{% url 'signup' %}" class="btn btn-outline-warning">Register</a>
+      {% endif %}
+
+    </div>
+  </header>
+  <!-- End Header -->

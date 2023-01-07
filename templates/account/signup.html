@@ -1,0 +1,47 @@
+{% extends 'common/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}Sign Up{% endblock %}
+
+<!-- ======= Header ======= -->
+{% block header %}
+  {% include 'common/navbar.html' %}
+{% endblock %}
+<!-- End Header -->
+
+{% block content %}
+  <main id="main">
+    <div class="container">
+        <div class="row m-3">
+        
+            <div class="border offset-3 col-md-6 border-warning rounded-4">
+                <h2 class="text-success text-center border p-5 m-1">Sign Up</h2>
+                <form method="post" action="{% url 'signup' %}" class="m-3" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    {{ form1|crispy }}
+    
+                    <div class="row p-2">
+                        <div class="col">
+                            <input type="submit" class="btn btn-warning w-100 mx-auto" value="SignUp">
+                        </div>
+                    </div>
+                    
+                    Already have an Account? <a class="w-100 mx-auto" href="{% url 'login' %}">Login</a>
+                </form>
+            </div>
+        </div>
+    </div>
+  </main>
+  <!-- End #main -->
+  {% endblock %}
+
+  <!-- ======= Footer ======= -->
+  {% block footer %}
+    {% include 'common/footer.html' %}
+  {% endblock %}
+  <!-- End Footer -->
+
+
